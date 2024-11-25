@@ -25,7 +25,6 @@
 
     <build>
         <plugins>
-            <!-- Plugin pour créer un JAR avec toutes les dépendances -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -33,18 +32,18 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Main-Class>org.example.Main</Main-Class> <!-- Remplacez par votre classe principale -->
+                            <Main-Class>org.example.Main</Main-Class>
                         </manifestEntries>
                     </archive>
                     <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef> <!-- Crée un JAR avec toutes les dépendances -->
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                 </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
-                            <goal>single</goal> <!-- Crée le JAR avec toutes les dépendances -->
+                            <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>

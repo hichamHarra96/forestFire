@@ -1,11 +1,22 @@
+package org.example;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
-                Configuration config = Configuration.chargerDepuisFichier("config.txt");
+                InputStream input = Main.class.getClassLoader().getResourceAsStream("config.json");
+                if (input == null) {
+                    throw new IOException("Configuration file not found in resources.");
+                }
+                ObjectMapper objectMapper = new ObjectMapper();
+                Configuration config = objectMapper.readValue(input, Configuration.class);
                 Forest forest = new Forest(config);
                 ForestPanel forestPanel = new ForestPanel(forest);
 

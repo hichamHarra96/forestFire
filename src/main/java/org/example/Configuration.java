@@ -1,7 +1,9 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
+package org.example;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Configuration {
@@ -10,59 +12,53 @@ public class Configuration {
     private double propagationProbability;
     private List<int[]> firePositions;
 
-    public Configuration(int height, int width, double propagationProbability, List<int[]> firePositions) {
-        this.height = height;
-        this.width = width;
-        this.propagationProbability = propagationProbability;
-        this.firePositions = firePositions;
+    // Constructor
+    public Configuration() {
+        // Default constructor required for Jackson
     }
 
-    public static Configuration chargerDepuisFichier(String cheminFichier) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader(cheminFichier))) {
-            int hauteur = 0, largeur = 0;
-            double probabilite = 0.0;
-            List<int[]> positionsFeu = new ArrayList<>();
-
-            String ligne;
-            while ((ligne = br.readLine()) != null) {
-                ligne = ligne.trim();
-                if (ligne.isEmpty() || ligne.startsWith("#")) continue;
-
-                if (hauteur == 0 && largeur == 0) {
-                    String[] dimensions = ligne.split(" ");
-                    hauteur = Integer.parseInt(dimensions[0]);
-                    largeur = Integer.parseInt(dimensions[1]);
-                } else if (probabilite == 0.0) {
-                    probabilite = Double.parseDouble(ligne);
-                } else {
-                    String[] position = ligne.split(" ");
-                    positionsFeu.add(new int[]{Integer.parseInt(position[0]), Integer.parseInt(position[1])});
-                }
-            }
-
-            return new Configuration(hauteur, largeur, probabilite, positionsFeu);
-        }
-    }
-
+    // Getters and Setters
     public int getHeight() {
         return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public int getWidth() {
         return width;
     }
 
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
     public double getPropagationProbability() {
         return propagationProbability;
+    }
+
+    public void setPropagationProbability(double propagationProbability) {
+        this.propagationProbability = propagationProbability;
     }
 
     public List<int[]> getFirePositions() {
         return firePositions;
     }
 
+    public void setFirePositions(List<int[]> firePositions) {
+        this.firePositions = firePositions;
+    }
+
+    // Load Configuration from JSON file
+    public static Configuration loadFromFile(String filePath) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(new File(filePath), Configuration.class);
+    }
+
     @Override
     public String toString() {
-        return String.format("<html>Dimensions : %dx%d<br>Probabilité de propagation : %.2f</html>",
+        return String.format("<html>Dimensions: %dx%d<br>Propagation Probability: %.2f</html>",
                 height, width, propagationProbability);
     }
 }

@@ -1,0 +1,9 @@
+{
+  "height": 10,
+  "width": 10,
+  "propagationProbability": 0.7,
+  "firePositions": [
+    [1, 1],
+    [2, 2]
+  ]
+}

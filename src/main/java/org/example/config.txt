@@ -1,9 +1,0 @@
-# Dimensions de la grille
-20 20
-
-# Probabilité de propagation
-0.4
-
-# Positions initiales des foyers
-1 1
-2 2
